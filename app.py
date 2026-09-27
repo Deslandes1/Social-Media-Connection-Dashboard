@@ -1,6 +1,6 @@
 # app.py
 # =============================================================================
-# SOCIAL MEDIA HUB — Fully User-Managed Credentials
+# SOCIAL MEDIA HUB — Fully User-Managed Credentials · Light Blue Theme
 # Built by Gesner Deslandes · Software Engineer
 # Contact Info : (509)-47385663 · Email : deslandes78@gmail.com
 #
@@ -25,138 +25,239 @@ st.set_page_config(
 )
 
 # -----------------------------------------------------------------------------
-# GLOBAL CSS
+# GLOBAL CSS — LIGHT BLUE THEME
 # -----------------------------------------------------------------------------
 CSS = """
 <style>
+  /* ===== PAGE BACKGROUND ===== */
   .stApp {
     background:
-      radial-gradient(1200px 700px at 50% -10%, rgba(0,229,255,.10), transparent 65%),
-      radial-gradient(900px 600px at 10% 110%, rgba(255,217,59,.05), transparent 60%),
-      radial-gradient(900px 600px at 90% 110%, rgba(168,107,255,.05), transparent 60%),
-      #05070c !important;
-    color: #d8e4f0;
+      radial-gradient(1200px 700px at 50% -10%, rgba(255,255,255,.85), transparent 65%),
+      radial-gradient(900px 600px at 10% 110%, rgba(180,220,255,.55), transparent 60%),
+      radial-gradient(900px 600px at 90% 110%, rgba(200,230,255,.50), transparent 60%),
+      #d4eaff !important;
+    color: #0a2540;
   }
+  .stApp, .stApp p, .stApp span, .stApp label, .stApp div,
+  .stMarkdown, .stText, .stCaption, .stAlert {
+    color: #0a2540 !important;
+  }
+  .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6 {
+    color: #06357a !important;
+  }
+  .stApp .stCaption, .stApp small {
+    color: #35608f !important;
+  }
+  section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #eaf4ff, #cfe6ff) !important;
+    border-right: 2px solid #9cc8ff !important;
+  }
+  section[data-testid="stSidebar"] * {
+    color: #0a2540 !important;
+  }
+  details summary {
+    color: #06357a !important;
+    font-weight: 800 !important;
+  }
+
+  /* ===== HEADER ===== */
   .hub-header {
     padding: 22px 20px 18px;
     border-radius: 20px;
     background:
-      radial-gradient(1000px 300px at 50% 0%, rgba(255,217,59,.18), transparent 70%),
-      linear-gradient(180deg, rgba(24,18,6,.98), rgba(8,6,3,.98));
-    border: 3px solid #ffd93b;
-    box-shadow: 0 20px 60px rgba(0,0,0,.9), 0 0 60px rgba(255,217,59,.20);
+      radial-gradient(1000px 300px at 50% 0%, rgba(255,255,255,.9), transparent 70%),
+      linear-gradient(180deg, #eaf4ff, #cfe6ff);
+    border: 3px solid #3aa0ff;
+    box-shadow: 0 20px 60px rgba(58,160,255,.25), 0 0 40px rgba(58,160,255,.15);
     text-align: center; margin-bottom: 18px;
   }
   .hub-brand {
     font-family: Georgia, serif;
     font-size: clamp(1.5rem, 4vw, 2.4rem);
     font-weight: 900; letter-spacing: 6px;
-    background: linear-gradient(90deg,#ffd93b,#ff8a2b,#ffd93b,#a86bff,#ffd93b);
+    background: linear-gradient(90deg,#06357a,#1060a0,#06357a,#3a6bd0,#06357a);
     background-size: 200% 100%;
     -webkit-background-clip: text; background-clip: text; color: transparent;
     margin: 0 0 6px;
   }
   .hub-tagline {
     font-size: .74rem; font-weight: 900; letter-spacing: 3px;
-    color: #ffe680; text-transform: uppercase; margin-bottom: 12px;
+    color: #1060a0; text-transform: uppercase; margin-bottom: 12px;
   }
   .hub-credit {
     font-family: Georgia, serif; font-size: .82rem; font-weight: 900;
-    letter-spacing: 1.4px; color: #ffd93b;
+    letter-spacing: 1.4px; color: #06357a;
   }
   .hub-credit small {
     display: block; font-family: 'Courier New', monospace;
-    font-size: .7rem; color: #6b7c92; letter-spacing: 1.2px;
+    font-size: .7rem; color: #35608f; letter-spacing: 1.2px;
     margin-top: 4px; font-weight: 800;
   }
-  .hub-credit a { color: #00e5ff; text-decoration: none; border-bottom: 1px dotted #00e5ff; }
+  .hub-credit a {
+    color: #1060a0; text-decoration: none;
+    border-bottom: 1px dotted #1060a0;
+  }
+  .hub-credit a:hover { color: #06357a; }
 
+  /* ===== PLATFORM CARDS ===== */
   .platform-card {
     padding: 18px 20px; border-radius: 16px;
-    background: linear-gradient(180deg, rgba(8,14,22,.98), rgba(4,7,12,.98));
-    border: 2px solid #1c2636;
-    box-shadow: 0 14px 36px rgba(0,0,0,.65);
+    background: linear-gradient(180deg, #ffffff, #eef6ff);
+    border: 2px solid #9cc8ff;
+    box-shadow: 0 14px 36px rgba(58,160,255,.15);
     margin-bottom: 8px;
   }
   .platform-card.connected {
-    border-color: rgba(34,255,136,.6);
-    box-shadow: 0 14px 36px rgba(0,0,0,.65), 0 0 30px rgba(34,255,136,.15);
+    border-color: rgba(20,168,96,.7);
+    box-shadow: 0 14px 36px rgba(58,160,255,.15), 0 0 24px rgba(20,168,96,.18);
   }
   .platform-card.disconnected {
-    border-color: rgba(255,59,48,.35);
+    border-color: rgba(224,58,48,.5);
   }
   .platform-title {
     font-family: Georgia, serif; font-size: 1.1rem;
-    font-weight: 900; letter-spacing: 1.4px; color: #fff;
+    font-weight: 900; letter-spacing: 1.4px; color: #06357a;
     margin-bottom: 4px;
   }
   .platform-status {
     font-family: 'Courier New', monospace; font-size: .7rem;
     letter-spacing: 1.4px; text-transform: uppercase;
   }
-  .platform-status.on { color: #22ff88; }
-  .platform-status.off { color: #ff3b30; }
+  .platform-status.on  { color: #0a8f4a; }
+  .platform-status.off { color: #c22a20; }
 
-  .hub-footer {
-    margin-top: 24px; padding: 18px; border-radius: 14px;
-    text-align: center;
-    background: linear-gradient(180deg, rgba(8,14,22,.98), rgba(4,7,12,.98));
-    border: 2px solid #1c2636;
-    font-family: 'Courier New', monospace;
-    font-size: .72rem; color: #6b7c92;
-    letter-spacing: 1.4px; line-height: 2;
-  }
-  .hub-footer strong { color: #ffd93b; letter-spacing: 2px; }
-  .hub-footer a { color: #00e5ff; text-decoration: none; border-bottom: 1px dotted #00e5ff; }
-
+  /* ===== INFO BANNERS ===== */
   .banner-info {
     padding: 12px 16px; border-radius: 10px;
-    background: rgba(0,229,255,.06);
-    border: 1.5px solid rgba(0,229,255,.35);
-    color: #b4f2ff;
+    background: rgba(58,160,255,.10);
+    border: 1.5px solid rgba(58,160,255,.5);
+    color: #06357a;
     font-family: 'Courier New', monospace;
     font-size: .78rem; line-height: 1.7;
     margin-bottom: 16px;
   }
   .banner-ok {
     padding: 12px 16px; border-radius: 10px;
-    background: rgba(34,255,136,.08);
-    border: 1.5px solid rgba(34,255,136,.4);
-    color: #a8ffd0;
+    background: rgba(20,168,96,.14);
+    border: 1.5px solid rgba(20,150,80,.55);
+    color: #0a4b26;
     font-family: 'Courier New', monospace;
     font-size: .78rem; line-height: 1.7;
     margin-bottom: 16px;
   }
   .banner-warn {
     padding: 12px 16px; border-radius: 10px;
-    background: rgba(255,176,32,.08);
-    border: 1.5px solid rgba(255,176,32,.4);
-    color: #ffd9a0;
+    background: rgba(255,176,32,.14);
+    border: 1.5px solid rgba(214,136,0,.55);
+    color: #6b4400;
     font-family: 'Courier New', monospace;
     font-size: .78rem; line-height: 1.7;
     margin-bottom: 16px;
   }
 
+  /* ===== FOOTER ===== */
+  .hub-footer {
+    margin-top: 24px; padding: 18px; border-radius: 14px;
+    text-align: center;
+    background: linear-gradient(180deg, #ffffff, #e6f1ff);
+    border: 2px solid #9cc8ff;
+    font-family: 'Courier New', monospace;
+    font-size: .72rem; color: #35608f;
+    letter-spacing: 1.4px; line-height: 2;
+  }
+  .hub-footer strong { color: #06357a; letter-spacing: 2px; }
+  .hub-footer a {
+    color: #1060a0; text-decoration: none;
+    border-bottom: 1px dotted #1060a0;
+  }
+
+  /* ===== BUTTONS ===== */
   div[data-testid="stButton"] > button {
     border-radius: 11px; font-weight: 900;
-    letter-spacing: 1.2px; padding: 10px 16px; transition: all .15s;
+    letter-spacing: 1.2px; padding: 10px 16px;
+    background: linear-gradient(180deg, #eaf4ff, #cfe6ff) !important;
+    color: #06357a !important;
+    border: 2px solid #3aa0ff !important;
+    transition: all .15s;
   }
   div[data-testid="stButton"] > button:hover {
     transform: translateY(-1px);
-    box-shadow: 0 0 20px rgba(255,217,59,.35);
+    background: linear-gradient(180deg, #d3e9ff, #b3d8ff) !important;
+    box-shadow: 0 6px 18px rgba(58,160,255,.35);
   }
+
+  /* ===== INPUTS ===== */
   .stTextInput > div > div > input,
-  .stTextArea > div > div > textarea {
-    background: rgba(3,6,12,.9) !important;
-    color: #fff !important;
-    border: 2px solid rgba(58,160,255,.5) !important;
+  .stTextArea > div > div > textarea,
+  .stNumberInput > div > div > input,
+  .stSelectbox > div > div > div,
+  div[data-baseweb="select"] > div {
+    background: #ffffff !important;
+    color: #0a2540 !important;
+    border: 2px solid #9cc8ff !important;
     border-radius: 10px !important;
     font-weight: 700 !important;
   }
   .stTextInput > div > div > input:focus,
-  .stTextArea > div > div > textarea:focus {
-    border-color: #ffd93b !important;
-    box-shadow: 0 0 0 3px rgba(255,217,59,.25) !important;
+  .stTextArea > div > div > textarea:focus,
+  .stNumberInput > div > div > input:focus {
+    border-color: #3aa0ff !important;
+    box-shadow: 0 0 0 3px rgba(58,160,255,.25) !important;
+  }
+  .stTextInput input::placeholder,
+  .stTextArea textarea::placeholder {
+    color: #7a9cbf !important;
+    opacity: 1 !important;
+  }
+
+  /* ===== FILE UPLOADER ===== */
+  div[data-testid="stFileUploader"] {
+    background: #ffffff !important;
+    border: 2px dashed #3aa0ff !important;
+    border-radius: 12px !important;
+    padding: 12px !important;
+  }
+  div[data-testid="stFileUploader"] * {
+    color: #06357a !important;
+  }
+
+  /* ===== ALERTS ===== */
+  .stAlert {
+    border-radius: 12px !important;
+    border-width: 2px !important;
+  }
+  div[data-testid="stAlert"] {
+    background: #ffffff !important;
+    color: #0a2540 !important;
+  }
+
+  /* ===== EXPANDER ===== */
+  details {
+    background: #ffffff !important;
+    border: 1.5px solid #9cc8ff !important;
+    border-radius: 12px !important;
+  }
+
+  /* ===== SPINNER / CAPTION ===== */
+  .stSpinner > div { border-top-color: #3aa0ff !important; }
+  .stCaption, div[data-testid="stCaptionContainer"] {
+    color: #35608f !important;
+  }
+
+  /* ===== CODE BLOCKS ===== */
+  code {
+    background: #eaf4ff !important;
+    color: #06357a !important;
+    border-radius: 6px !important;
+  }
+  pre {
+    background: #eaf4ff !important;
+    border: 1px solid #9cc8ff !important;
+    border-radius: 10px !important;
+  }
+  pre code {
+    background: transparent !important;
+    color: #06357a !important;
   }
 </style>
 """
@@ -234,11 +335,11 @@ PLATFORMS = [
 # -----------------------------------------------------------------------------
 def init_state():
     defaults = {
-        "connections":   {},       # { platform_id: { "credentials": {...}, "connected_at": "..." } }
-        "proxy_enabled": False,
-        "proxy_url":     "",
+        "connections":    {},       # { platform_id: { "credentials": {...}, "connected_at": "..." } }
+        "proxy_enabled":  False,
+        "proxy_url":      "",
         "proxy_verified": False,
-        "proxy_ip":      "",
+        "proxy_ip":       "",
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -343,7 +444,7 @@ with st.sidebar:
                 f"""
                 <div class="banner-ok" style="font-size:.72rem;">
                   🟢 Proxy active<br>
-                  <span style="color:#7fe8ff;">IP: {st.session_state.proxy_ip}</span>
+                  <span style="color:#1060a0;">IP: {st.session_state.proxy_ip}</span>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -410,7 +511,6 @@ for i, platform in enumerate(PLATFORMS):
         connected = pid in st.session_state.connections
         card_class = "connected" if connected else "disconnected"
 
-        # Card visual
         st.markdown(
             f"""
             <div class="platform-card {card_class}">
@@ -423,14 +523,12 @@ for i, platform in enumerate(PLATFORMS):
             unsafe_allow_html=True,
         )
 
-        # Credentials expander
         with st.expander(
             f"🔑 Configure {platform['name']}",
             expanded=not connected,
         ):
             st.caption(platform["help"])
 
-            # Load existing values if connected
             existing = st.session_state.connections.get(pid, {}).get("credentials", {})
 
             values = {}
@@ -492,7 +590,6 @@ if connected_names:
 else:
     st.info("No platforms connected yet. Configure at least one above.")
 
-# Show masked credentials
 if st.session_state.connections:
     with st.expander("📋 View saved credentials (masked)"):
         for pid, data in st.session_state.connections.items():
@@ -542,7 +639,6 @@ if st.session_state.connections:
             if not platform:
                 continue
             try:
-                # Placeholder network check — replace with real API endpoint later.
                 r = requests.get("https://httpbin.org/ip", proxies=proxies, timeout=10)
                 if r.status_code == 200:
                     ip = r.json().get("origin", "?")
